@@ -1,0 +1,12 @@
+{
+  "name": "TaskManagerMobileKross",
+  "displayName": "TaskManagerMobileKross",
+  "expo": {
+    "name": "TaskManagerMobileKross",
+    "slug": "TaskManagerMobileKross",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
