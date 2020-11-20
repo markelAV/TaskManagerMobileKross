@@ -8,7 +8,7 @@ export default class SettingsScreen extends Component {
             <Container>
                 <Header>
                     <Left>
-                        <Button transparent>
+                        <Button transparent onPress={() => this.props.navigation.navigate('Calendar', {})}>
                             <Icon name='arrow-back' />
                         </Button>
                     </Left>
@@ -16,9 +16,6 @@ export default class SettingsScreen extends Component {
                         <Title>Settings</Title>
                     </Body>
                     <Right>
-                        <Button transparent>
-                            <Icon name='menu' />
-                        </Button>
                     </Right>
                 </Header>
                 <Content>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Header, Content, Text } from 'native-base';
+import { Container, Header, Content, Text, Root } from 'native-base';
 import { StyleSheet, Button, View, SafeAreaView,  Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -70,20 +70,22 @@ function MenuScreen({ navigation }) {
 
 function App() {
   return (
-      <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Calendar" screenOptions={{headerShown: false}}>
-          <Drawer.Screen name="Calendar" component={CalendarScreen} />
-          <Drawer.Screen name="CreateEditTask" component={CreateEditTaskScreen} />
-          <Drawer.Screen name="GEO" component={GEOScreen} />
-          <Drawer.Screen name="Load" component={LoadScreen} />
-          <Drawer.Screen name="Login" component={LoginScreen} />
-          <Drawer.Screen name="Onboadrding" component={OnboadrdingScreen} />
-          <Drawer.Screen name="Settings" component={SettingsScreen} />
-          <Drawer.Screen name="Start" component={StartScreen} />
-          <Drawer.Screen name="ViewTask" component={ViewTaskScreen} />
-          <Drawer.Screen name="Menu" component={MenuScreen} />
-        </Drawer.Navigator>
-      </NavigationContainer>
+      <Root>
+          <NavigationContainer>
+              <Drawer.Navigator initialRouteName="Calendar" screenOptions={{headerShown: false}}>
+                  <Drawer.Screen name="Calendar" component={CalendarScreen} />
+                  <Drawer.Screen name="CreateEditTask" component={CreateEditTaskScreen} />
+                  <Drawer.Screen name="GEO" component={GEOScreen} />
+                  <Drawer.Screen name="Load" component={LoadScreen} />
+                  <Drawer.Screen name="Login" component={LoginScreen} />
+                  <Drawer.Screen name="Onboadrding" component={OnboadrdingScreen} />
+                  <Drawer.Screen name="Settings" component={SettingsScreen} />
+                  <Drawer.Screen name="Start" component={StartScreen} />
+                  <Drawer.Screen name="ViewTask" component={ViewTaskScreen} />
+                  <Drawer.Screen name="Menu" component={MenuScreen} />
+              </Drawer.Navigator>
+          </NavigationContainer>
+      </Root>
   );
 }
 

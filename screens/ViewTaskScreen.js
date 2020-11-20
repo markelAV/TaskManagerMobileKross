@@ -1,12 +1,46 @@
 import React, { Component } from 'react';
-import { Container, Header, Left, Body, Right, Title, Icon, Content, Form, Item, Input, Label, Button, Text, Textarea } from 'native-base';
+import { Container, Header, Left, Body, Right, Title, Icon, Content, Form, Item, Input, Label, Button, Text, Textarea, ActionSheet } from 'native-base';
 import {Image, StyleSheet, View} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 
-const imageLogo = require('../recources/logo1.jpg')
+const imageLogo = require('../recources/logo1.jpg');
+var BUTTONS = ["Edit task", "Complete task", "Delete", "Cancel"];
+var DESTRUCTIVE_INDEX = 2;
+var CANCEL_INDEX = 3;
+
 class ViewTaskScreen extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
     _onPressButtonSave() {
-            alert('Access successfully')
+            alert('Task complete successfully')
+    }
+
+    _onPressButtonMenu(buttonIndex) {
+        switch (buttonIndex) {
+            case 0:
+                this._onPressButtonEdit();
+                break;
+            case 1:
+                this._onPressButtonSave();
+                break;
+            case 2:
+                this._onPressButtonDelete();
+                break;
+        }
+    }
+    _onPressButtonEdit() {
+        let item = this.props.route.params.task;
+        console.log(item.title);
+        this.props.navigation.navigate('CreateEditTask',{task: item})
+    }
+
+    _onPressButtonDelete() {
+        alert("Delete task successful"); //Fixme please!!! complete delete
+        this.props.navigation.navigate('Calendar');
     }
 
     render() {
@@ -19,9 +53,21 @@ class ViewTaskScreen extends Component {
                         </Button>
                     </Left>
                     <Body>
+                        <Title>View task</Title>
                     </Body>
                     <Right>
-                        <Button transparent>
+                        <Button transparent  onPress={() =>
+                            ActionSheet.show(
+                                {
+                                    options: BUTTONS,
+                                    cancelButtonIndex: CANCEL_INDEX,
+                                    destructiveButtonIndex: DESTRUCTIVE_INDEX,
+                                    title: "Action on tasks"
+                                },
+                                buttonIndex => {
+                                    this._onPressButtonMenu(buttonIndex);
+                                }
+                            )}>
                             <Icon name='menu' />
                         </Button>
                     </Right>
@@ -38,7 +84,7 @@ class ViewTaskScreen extends Component {
                     </Row>
                     <Row>
                         <Button style={styles.buttonWork} block primary onPress={()=>this._onPressButtonSave(this)}>
-                            <Text> Save </Text>
+                            <Text> Complete </Text>
                         </Button>
                     </Row>
                 </Grid>
@@ -71,7 +117,8 @@ const styles = StyleSheet.create({
         fontSize:20,
     },
     buttonWork: {
-        marginTop:80
+        marginTop:80,
+        flex:1
     }
 });
 

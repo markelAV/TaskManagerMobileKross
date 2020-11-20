@@ -1,52 +1,89 @@
 import React, { Component } from 'react';
-import { Container, Header, Left, Body, Right, Title, Icon, Content, Form, Item, Input, Label, Button, Text, Textarea } from 'native-base';
+import {
+    Container,
+    Header,
+    Left,
+    Body,
+    Right,
+    Title,
+    Icon,
+    Content,
+    Form,
+    Item,
+    Input,
+    Label,
+    Button,
+    Text,
+    Textarea,
+    ActionSheet
+} from 'native-base';
 import {Image, StyleSheet, View} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
+var BUTTONS = ["Complete task", "Delete", "Cancel"];
+var DESTRUCTIVE_INDEX = 1;
+var CANCEL_INDEX = 2;
+
 class CreateEditTaskScreen extends Component {
     constructor(props) {
         super(props);
-        let task = this.props.route.params? this.props.route.params.task: null;
-        if(task) {
-            console.log(task);
-            this.state = {
-                name:task.title,
-                date:new Date(),
-                description:'',
-                show:false,
-                action: 'Edit task'
-            };
-            this.props.route.params.task = null;
-        } else {
-            this.state = {
-                name:'',
-                date:new Date(),
-                description:'',
-                show:false,
-                action: 'New task'
-            };
+        this.state = {
+            name:'',
+            date:new Date(),
+            description:'',
+            show:false,
+            action: 'New task'
+        };
+    }
+    __onPressButtonSave() {
+        alert('Task complete successfully')
+    }
+
+    _onPressButtonMenu(buttonIndex) {
+        switch (buttonIndex) {
+            case 0:
+                this._onPressButtonSave();
+                break;
+            case 1:
+                this._onPressButtonDelete();
+                break;
         }
     }
-    _onPressButtonSave() {
-        if(this.state.name === 'testTask') { //Fixme please!! complete
-            alert('Access successfully');
-        }
-        else {
-            alert('Access denied');
-        }
+    _onPressButtonEdit() {
+        let item = this.props.route.params.task;
+        console.log(item.title);
+        this.props.navigation.navigate('CreateEditTask',{task: item})
     }
+
+    _onPressButtonDelete() {
+        alert("Delete task successful"); //Fixme please!!! complete delete
+        this.props.navigation.navigate('Calendar');
+    }
+
     _onShowDatePicker(mode) {
         this.setState({show: mode});
     }
 
     render() {
+        let task =this.props.route.params.task;
+        if(task) {
+            console.log(task);
+            this.state = {
+                name:task.title,
+                date:task.date,
+                description:task.description,
+                show:false,
+                action: 'Edit task'
+            };
+            this.props.route.params.task = null;
+        }
         if(!this.state.show){
             return (
                 <Container style={styles.container}>
                     <Header>
                         <Left>
-                            <Button transparent onPress={() => this.props.navigation.navigate('Calendar')}>
+                            <Button transparent onPress={() => this.props.navigation.navigate('Calendar', {})}>
                                 <Icon name='arrow-back' />
                             </Button>
                         </Left>
@@ -54,7 +91,18 @@ class CreateEditTaskScreen extends Component {
                             <Title>{this.state.action}</Title>
                         </Body>
                         <Right>
-                            <Button transparent>
+                            <Button transparent disabled={this.state.action === 'New task'}  onPress={() =>
+                                ActionSheet.show(
+                                    {
+                                        options: BUTTONS,
+                                        cancelButtonIndex: CANCEL_INDEX,
+                                        destructiveButtonIndex: DESTRUCTIVE_INDEX,
+                                        title: "Action on tasks"
+                                    },
+                                    buttonIndex => {
+                                        this._onPressButtonMenu(buttonIndex);
+                                    }
+                                )}>
                                 <Icon name='menu' />
                             </Button>
                         </Right>
@@ -73,11 +121,11 @@ class CreateEditTaskScreen extends Component {
                                 </Item>
                                 <Item style={{flex:1, flexDirection:'column', alignItems: 'left', marginTop:10}}>
                                     <Label>Description</Label>
-                                    <Textarea style={styles.inputs}/>
+                                    <Textarea value={this.state.description} style={styles.inputs} onChangeText={(text) => {this.setState({description: text})}}/>
                                 </Item>
                             </Form>
                         </Row>
-                        <Row>
+                        <Row style={{padding:16}}>
                             <Button style={styles.buttonSign} block primary onPress={()=>this._onPressButtonSave(this)}>
                                 <Text> Save </Text>
                             </Button>
@@ -88,7 +136,7 @@ class CreateEditTaskScreen extends Component {
         }
         else {
             return (
-                <View style={{marginTop:200}}>
+                <View style={{marginTop:200, padding:20}}>
                     <DateTimePicker
                         testID="dateTimePicker"
                         value={this.state.date}
@@ -131,7 +179,8 @@ const styles = StyleSheet.create({
         color:'blue'
     },
     buttonSign: {
-        marginTop:80
+        marginTop:80,
+        flex:1
     },
     inputs: {
         width: '100%',

@@ -21,7 +21,7 @@ const today = new Date().toISOString().split('T')[0];
 const fastDate = getPastDate(3);
 const futureDates = getFutureDates(9);
 const dates = [fastDate, today].concat(futureDates);
-const themeColor = '#00AAAF';
+const themeColor = '#408AD2';
 const lightThemeColor = '#EBF9F9';
 
 function getFutureDates(days) {
@@ -53,6 +53,10 @@ const ITEMS = [
 ];
 
 export default class CalendarScreen extends Component {
+
+    constructor(props) {
+        super(props);
+    }
 
     onDateChanged = (/* date, updateSource */) => {
         // console.warn('ExpandableCalendarScreen onDateChanged: ', date, updateSource);
@@ -86,7 +90,7 @@ export default class CalendarScreen extends Component {
         let maxlimit = 17; //Limit on size Title of task
         return (
             <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('ViewTask',{task: item})}
+                onPress={() => {this.props.navigation.navigate('ViewTask',{task: item})}}
                 style={styles.item}
                 testID={testIDs.agenda.ITEM}
             >
@@ -98,7 +102,7 @@ export default class CalendarScreen extends Component {
                     (((item.title).substring(0,maxlimit-3)) + '...') :
                     item.title }</Text>
                 <View style={styles.itemButtonContainer}>
-                    <Button color={'grey'} title={'Edit'} onPress={() => this.props.navigation.navigate('CreateEditTask',{task: item})}/>
+                    <Button color={'grey'} title={'Edit'} onPress={() => {this.props.navigation.navigate('CreateEditTask',{task: item})}}/>
                 </View>
             </TouchableOpacity>
         );
