@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Title, Icon, Content, Form, Item, Input, Label, Button, Text, Textarea, ActionSheet } from 'native-base';
 import {Image, StyleSheet, View} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import {IMLocalized, init} from '../locale/IMLocalized';
 
 const imageLogo = require('../recources/logo1.jpg');
-var BUTTONS = ["Edit task", "Complete task", "Delete", "Cancel"];
+var BUTTONS = [IMLocalized('operation_edit_task'), IMLocalized('operation_complete_task'), IMLocalized('operation_delete'), IMLocalized('operation_cancel')];
 var DESTRUCTIVE_INDEX = 2;
 var CANCEL_INDEX = 3;
 
@@ -13,6 +14,8 @@ class ViewTaskScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {};
+        init();
+        BUTTONS = [IMLocalized('operation_edit_task'), IMLocalized('operation_complete_task'), IMLocalized('operation_delete'), IMLocalized('operation_cancel')];
     }
 
     _onPressButtonSave() {
@@ -44,6 +47,7 @@ class ViewTaskScreen extends Component {
     }
 
     render() {
+        init();
         return (
             <Container style={styles.container}>
                 <Header>
@@ -53,7 +57,7 @@ class ViewTaskScreen extends Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>View task</Title>
+                        <Title>{IMLocalized('header_view_task')}</Title>
                     </Body>
                     <Right>
                         <Button transparent  onPress={() =>
@@ -62,7 +66,7 @@ class ViewTaskScreen extends Component {
                                     options: BUTTONS,
                                     cancelButtonIndex: CANCEL_INDEX,
                                     destructiveButtonIndex: DESTRUCTIVE_INDEX,
-                                    title: "Action on tasks"
+                                    title: IMLocalized('label_actions_for_task')
                                 },
                                 buttonIndex => {
                                     this._onPressButtonMenu(buttonIndex);
@@ -84,7 +88,7 @@ class ViewTaskScreen extends Component {
                     </Row>
                     <Row>
                         <Button style={styles.buttonWork} block primary onPress={()=>this._onPressButtonSave(this)}>
-                            <Text> Complete </Text>
+                            <Text>{IMLocalized('operation_complete')}</Text>
                         </Button>
                     </Row>
                 </Grid>

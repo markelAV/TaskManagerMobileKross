@@ -20,8 +20,9 @@ import {
 import {Image, StyleSheet, View} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {IMLocalized, init} from '../locale/IMLocalized';
 
-var BUTTONS = ["Complete task", "Delete", "Cancel"];
+var BUTTONS = [IMLocalized('operation_complete_task'), IMLocalized('operation_delete'), IMLocalized('operation_cancel')];
 var DESTRUCTIVE_INDEX = 1;
 var CANCEL_INDEX = 2;
 
@@ -33,7 +34,7 @@ class CreateEditTaskScreen extends Component {
             date:new Date(),
             description:'',
             show:false,
-            action: 'New task'
+            action: IMLocalized('header_create_task')
         };
     }
     __onPressButtonSave() {
@@ -66,6 +67,7 @@ class CreateEditTaskScreen extends Component {
     }
 
     render() {
+        init();
         let task =this.props.route.params.task;
         if(task) {
             console.log(task);
@@ -74,7 +76,7 @@ class CreateEditTaskScreen extends Component {
                 date:task.date,
                 description:task.description,
                 show:false,
-                action: 'Edit task'
+                action: IMLocalized('header_edit_task')
             };
             this.props.route.params.task = null;
         }
@@ -91,13 +93,13 @@ class CreateEditTaskScreen extends Component {
                             <Title>{this.state.action}</Title>
                         </Body>
                         <Right>
-                            <Button transparent disabled={this.state.action === 'New task'}  onPress={() =>
+                            <Button transparent disabled={this.state.action === IMLocalized('header_create_task')}  onPress={() =>
                                 ActionSheet.show(
                                     {
                                         options: BUTTONS,
                                         cancelButtonIndex: CANCEL_INDEX,
                                         destructiveButtonIndex: DESTRUCTIVE_INDEX,
-                                        title: "Action on tasks"
+                                        title: IMLocalized('label_actions_for_task')
                                     },
                                     buttonIndex => {
                                         this._onPressButtonMenu(buttonIndex);
@@ -111,23 +113,23 @@ class CreateEditTaskScreen extends Component {
                         <Row style={styles.rowForm}>
                             <Form style={{minWidth:300}}>
                                 <Item fixedLabel>
-                                    <Label>Name</Label>
+                                    <Label>{IMLocalized('label_name')}</Label>
                                     <Input style={styles.inputs} value={this.state.name} onChangeText={(text) => {this.setState({name: text})}} />
                                 </Item>
                                 <Item fixedLabel>
-                                    <Label>Date</Label>
+                                    <Label>{IMLocalized('label_date')}</Label>
                                     <Input style={styles.inputs} onFocus={() => {this._onShowDatePicker(true)}} value={this.state.date.toString()}/>
 
                                 </Item>
                                 <Item style={{flex:1, flexDirection:'column', alignItems: 'left', marginTop:10}}>
-                                    <Label>Description</Label>
+                                    <Label>{IMLocalized('label_description')}</Label>
                                     <Textarea value={this.state.description} style={styles.inputs} onChangeText={(text) => {this.setState({description: text})}}/>
                                 </Item>
                             </Form>
                         </Row>
                         <Row style={{padding:16}}>
                             <Button style={styles.buttonSign} block primary onPress={()=>this._onPressButtonSave(this)}>
-                                <Text> Save </Text>
+                                <Text> {IMLocalized('operation_save')} </Text>
                             </Button>
                         </Row>
                     </Grid>
@@ -144,7 +146,7 @@ class CreateEditTaskScreen extends Component {
                         is24Hour={true}
                         display="default"
                         onChange={(event, selectedDate) => {this.setState({date: selectedDate})}} />
-                        <Button onPress={()=>{this._onShowDatePicker(false)}}><Text>Done</Text></Button>
+                        <Button onPress={()=>{this._onShowDatePicker(false)}}><Text>{IMLocalized('operation_done')}</Text></Button>
                 </View>
             )
         }

@@ -1,0 +1,18 @@
+{
+  "label_Today": "Сегодня",
+  "label_tasks": "Задачи",
+  "label_name": "Имя",
+  "label_date": "Дата",
+  "label_description": "Описание",
+  "label_actions_for_task": "Действия над задачами",
+  "label_empty_list_task": "Нет запланированных задач",
+  "operation_edit": "Изменить",
+  "operation_delete": "Удалить",
+  "operation_cancel": "Отмена",
+  "operation_save": "Сохранить",
+  "operation_complete": "Завершить",
+  "operation_edit_task": "Редактировать задачу",
+  "operation_complete_task": "Завершить задачу",
+  "header_view_task": "Просмотр задачи",
+  "header_edit_task": "Редактирование задачи"
+}

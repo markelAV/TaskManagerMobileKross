@@ -1,0 +1,20 @@
+{
+  "label_Today": "Today",
+  "label_tasks": "Tasks",
+  "label_name": "Name",
+  "label_date": "Date",
+  "label_description": "Description",
+  "label_actions_for_task": "Action on task",
+  "label_empty_list_task": "No Events Planned",
+  "operation_edit": "Edit",
+  "operation_delete": "Delete",
+  "operation_cancel": "Cancel",
+  "operation_save": "Save",
+  "operation_done": "Done",
+  "operation_complete": "Complete",
+  "operation_edit_task": "Edit task",
+  "operation_complete_task": "Complete task",
+  "header_view_task": "View task",
+  "header_edit_task": "Edit task",
+  "header_create_task": "Create task"
+}

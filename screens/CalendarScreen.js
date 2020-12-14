@@ -1,17 +1,10 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {
-    Platform,
-    Alert,
-    StyleSheet,
-    View,
-    Text,
-    TouchableOpacity,
-    Button
-} from 'react-native';
+import {Platform, Alert, StyleSheet, View, Text, TouchableOpacity, Button} from 'react-native';
 import {ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar} from 'react-native-calendars';
 import {Container, Icon} from 'native-base';
 import { Col, Row, Grid } from "react-native-easy-grid";
+import {IMLocalized, init} from '../locale/IMLocalized';
 
 
 const testIDs = require('../testIDs');
@@ -78,7 +71,8 @@ export default class CalendarScreen extends Component {
     renderEmptyItem() {
         return (
             <View style={styles.emptyItem}>
-                <Text style={styles.emptyItemText}>No Events Planned</Text>
+                <Text style={styles.emptyItemText}>
+                    {IMLocalized('label_empty_list_task')}</Text>
             </View>
         );
     }
@@ -102,7 +96,7 @@ export default class CalendarScreen extends Component {
                     (((item.title).substring(0,maxlimit-3)) + '...') :
                     item.title }</Text>
                 <View style={styles.itemButtonContainer}>
-                    <Button color={'grey'} title={'Edit'} onPress={() => {this.props.navigation.navigate('CreateEditTask',{task: item})}}/>
+                    <Button color={'grey'} title={IMLocalized('operation_edit')} onPress={() => {this.props.navigation.navigate('CreateEditTask',{task: item})}}/>
                 </View>
             </TouchableOpacity>
         );
@@ -158,6 +152,7 @@ export default class CalendarScreen extends Component {
     }
 
     render() {
+        init();
         let date = new Date();
         return (
             <Container style={{paddingTop:35}}>
@@ -165,7 +160,7 @@ export default class CalendarScreen extends Component {
                     <Grid>
                         <Col>
                             <Row>
-                                <Text style={{fontSize:24, fontWeight: 'bold'}}>Today</Text>
+                                <Text style={{fontSize:24, fontWeight: 'bold'}}>{IMLocalized('label_Today')}</Text>
                             </Row>
                             <Row>
                                 <Text style={{fontSize:12}}>{date.toDateString()}</Text>
@@ -214,7 +209,7 @@ export default class CalendarScreen extends Component {
                         />
                     }
                     <View style={{marginTop:30, paddingLeft:20}}>
-                        <Text style={{fontSize:20}}>Tasks</Text>
+                        <Text style={{fontSize:20}}>{IMLocalized('label_tasks')}</Text>
                     </View>
                     <AgendaList
                         sections={ITEMS}
